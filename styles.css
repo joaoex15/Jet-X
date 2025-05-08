@@ -1,136 +1,64 @@
-/* Botão Flutuante Principal */
+/* Botão flutuante */
 .jet-floating-btn {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 56px;
-  height: 56px;
-  background: #25D366;
+  width: 60px;
+  height: 60px;
+  background-color: #007bff;
   border-radius: 50%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  z-index: 9998;
-  transition: all 0.3s ease;
-}
-
-.jet-floating-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
 }
 
 .jet-floating-btn img {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
+  width: 35px;
+  height: 35px;
 }
 
-/* Chat Flutuante - Posição Fixa */
-.jet-floating-chat {
+/* Container do chat */
+.jet-chat-container {
   position: fixed;
-  bottom: 90px; /* Posicionado acima do botão */
+  bottom: 100px;
   right: 20px;
-  width: 320px;
-  height: 450px;
-  background: #f0f2f5;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  z-index: 9999;
+  width: 400px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
   overflow: hidden;
-  transform: translateY(20px);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: none;
+  z-index: 9998;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
 }
 
-.jet-floating-chat.active {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Cabeçalho */
+/* Cabeçalho do chat */
 .jet-chat-header {
-  padding: 12px 16px;
-  background: #00a884;
+  background-color: #007bff;
   color: white;
+  padding: 10px 15px;
+  font-weight: bold;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  position: relative;
 }
 
-.jet-chat-logo {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  margin-right: 10px;
-  object-fit: cover;
-}
-
-.jet-chat-header span {
-  flex-grow: 1;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* Botão Fechar (X) no canto superior direito */
-.jet-close-chat {
-  position: absolute;
-  right: 12px;
-  top: 12px;
+/* Botões do cabeçalho */
+.jet-chat-header button {
   background: transparent;
   border: none;
   color: white;
-  font-size: 20px;
+  font-size: 18px;
+  margin-left: 8px;
   cursor: pointer;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-/* Corpo do Chat */
-.jet-chat-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: #e5ddd5;
-  background-image: url('data:image/png;base64,...');
-  padding: 10px;
-  overflow-y: auto;
-}
-
-/* Área de Input - Input à esquerda e botão à direita */
-.jet-input-area {
-  display: flex;
-  gap: 8px;
-  padding: 8px;
-  background: #f0f2f5;
-  border-top: 1px solid #e9edef;
-}
-
-.jet-message-input {
-  flex: 1;
-  padding: 10px 12px;
+/* iframe do chatbot */
+.jet-chat-container iframe {
+  width: 100%;
+  height: 500px;
   border: none;
-  border-radius: 8px;
-  outline: none;
-  font-size: 14px;
-  background: white;
-}
-
-.jet-send-btn {
-  background: #00a884;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
 }
