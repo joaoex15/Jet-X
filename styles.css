@@ -1,64 +1,175 @@
-/* Botão flutuante */
-.jet-floating-btn {
+/* Container Principal */
+.jet-floating-container {
   position: fixed;
   bottom: 20px;
   right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 10000;
+}
+
+/* Estilo base para botões flutuantes */
+.jet-floating-btn {
   width: 60px;
   height: 60px;
-  background-color: #007bff;
   border-radius: 50%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  justify-content: center;
   cursor: pointer;
-  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.jet-floating-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 .jet-floating-btn img {
-  width: 35px;
-  height: 35px;
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
 }
 
-/* Container do chat */
-.jet-chat-container {
+/* Botão do Chat */
+.jet-chat-btn {
+  background: #3498db;
+}
+
+.jet-chat-btn:hover {
+  background: #2980b9;
+}
+
+/* Botão de Scripts */
+.jet-scripts-btn {
+  background: #2ecc71;
+}
+
+.jet-scripts-btn:hover {
+  background: #27ae60;
+}
+
+/* Containers de Chat e Scripts */
+.jet-chat-container,
+.jet-scripts-container {
   position: fixed;
   bottom: 100px;
   right: 20px;
-  width: 400px;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  width: 350px;
+  background: white;
   border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   display: none;
-  z-index: 9998;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+  z-index: 9999;
 }
 
-/* Cabeçalho do chat */
-.jet-chat-header {
-  background-color: #007bff;
+/* Cabeçalhos */
+.jet-chat-header,
+.jet-scripts-header {
+  padding: 12px 15px;
+  background: #2c3e50;
   color: white;
-  padding: 10px 15px;
-  font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Botões do cabeçalho */
-.jet-chat-header button {
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 18px;
-  margin-left: 8px;
-  cursor: pointer;
+.jet-chat-header span,
+.jet-scripts-header h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
 }
 
-/* iframe do chatbot */
-.jet-chat-container iframe {
-  width: 100%;
-  height: 500px;
+/* Botões de controle */
+.jet-close-btn,
+.jet-minimize-btn {
+  background: none;
   border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 8px;
+  transition: opacity 0.2s;
+}
+
+.jet-close-btn:hover,
+.jet-minimize-btn:hover {
+  opacity: 0.8;
+}
+
+/* Corpo dos containers */
+.jet-chat-iframe {
+  flex-grow: 1;
+}
+
+.jet-scripts-body {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.jet-scripts-body textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* Rodapé de scripts */
+.jet-scripts-footer {
+  display: flex;
+  gap: 10px;
+}
+
+.jet-save-btn,
+.jet-send-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.jet-save-btn {
+  background: #3498db;
+  color: white;
+}
+
+.jet-save-btn:hover {
+  background: #2980b9;
+}
+
+.jet-send-btn {
+  background: #2ecc71;
+  color: white;
+}
+
+.jet-send-btn:hover {
+  background: #27ae60;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .jet-chat-container,
+  .jet-scripts-container {
+    width: 90%;
+    right: 5%;
+    bottom: 80px;
+  }
+  
+  .jet-floating-container {
+    bottom: 15px;
+    right: 15px;
+  }
 }

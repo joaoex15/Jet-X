@@ -16,7 +16,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["jetsales.png", "chat.png", "jetchat.png","config.json"],
+      "resources": ["jetsales.png", "chat.png", "jetchat.png","config.json","setting.png"],
       "matches": ["https://web.whatsapp.com/*"]
     }
   ]
