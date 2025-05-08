@@ -1,60 +1,50 @@
-function escreverMensagemQuandoPronto(texto) {
-    function verificarCampoDeMensagem() {
-      const campoDeMensagem = document.querySelector('div[contenteditable="true"][data-tab="10"]');
-  
-      if (!campoDeMensagem) {
-        console.log("⏳ Aguardando o campo de mensagem...");
-        setTimeout(verificarCampoDeMensagem, 1000);
-      } else {
-        console.log("✅ Campo encontrado. Preparando para enviar mensagem...");
-  
-        setTimeout(() => {
-          campoDeMensagem.focus();
-          campoDeMensagem.innerHTML = '';
-  
-          // Inserir o texto no campo
-          document.execCommand('insertText', false, texto);
-  
-          // Disparar evento input
-          const eventoInput = new Event('input', {
-            bubbles: true,
-            cancelable: true
-          });
-          campoDeMensagem.dispatchEvent(eventoInput);
-  
-          // Simular Enter
-          const enterEvent = new KeyboardEvent('keydown', {
-            bubbles: true,
-            cancelable: true,
-            key: 'Enter',
-            code: 'Enter',
-            keyCode: 13,
-            which: 13
-          });
-          campoDeMensagem.dispatchEvent(enterEvent);
-  
-          // Tentar clicar no botão de enviar imediatamente após
-          setTimeout(() => {
-            const botaoEnviar = document.querySelector('span[data-icon="send"]');
-            if (botaoEnviar) {
-              botaoEnviar.click();
-              console.log("✅ Mensagem enviada clicando no botão.");
-            } else {
-              console.warn("⚠️ Botão de enviar não encontrado.");
-            }
-          }, 0); // sem atraso
-  
-        }, 1); // 3,5 segundos
-      }
+// Cria o botão flutuante
+const floatingBtn = document.createElement('div');
+floatingBtn.className = 'jet-floating-btn';
+floatingBtn.innerHTML = `<img src="${chrome.runtime.getURL('jetchat.png')}" alt="Jet Chat">`;
+document.body.appendChild(floatingBtn);
+
+// Cria o chat flutuante
+const floatingChat = document.createElement('div');
+floatingChat.className = 'jet-floating-chat';
+floatingChat.innerHTML = `
+    <div class="jet-chat-header">
+        <img src="${chrome.runtime.getURL('jetsales.png')}" class="jet-chat-logo">
+        <span>Chat JetSales</span>
+        <button class="jet-close-chat">×</button>
+    </div>
+    <div class="jet-chat-body">
+        <div class="jet-messages"></div>
+    </div>
+    <div class="jet-input-area">
+        <input type="text" placeholder="Digite sua mensagem..." class="jet-message-input">
+        <button class="jet-send-btn">Enviar</button>
+    </div>
+`;
+document.body.appendChild(floatingChat);
+
+// Controle de visibilidade
+floatingBtn.addEventListener('click', () => {
+    floatingChat.classList.toggle('active');
+});
+
+floatingChat.querySelector('.jet-close-chat').addEventListener('click', () => {
+    floatingChat.classList.remove('active');
+});
+
+// Envio de mensagem
+floatingChat.querySelector('.jet-send-btn').addEventListener('click', sendMessage);
+floatingChat.querySelector('.jet-message-input').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+});
+
+function sendMessage() {
+    const input = floatingChat.querySelector('.jet-message-input');
+    const message = input.value.trim();
+    if (message) {
+        const messagesContainer = floatingChat.querySelector('.jet-messages');
+        messagesContainer.innerHTML += `<div class="jet-message">${message}</div>`;
+        input.value = '';
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
-  
-    verificarCampoDeMensagem();
-  }
-  
-  // Listener para receber mensagem do popup
-  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === "enviarMensagem") {
-      escreverMensagemQuandoPronto(request.texto);
-    }
-  });
-  
+}

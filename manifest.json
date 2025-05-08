@@ -1,25 +1,23 @@
 {
   "manifest_version": 3,
-  "name": "Jet-x",
+  "name": "JetSales WhatsApp",
   "version": "1.0",
-  "permissions": [
-    "tabs",
-    "scripting",
-    "activeTab"
-  ],
-  "host_permissions": [
-    "https://web.whatsapp.com/*"
-  ],
-  "action": {
-    "default_popup": "popup/popup.html"
-  },
-  "background": {
-    "service_worker": "background.js"
+  "description": "Adiciona logo JetSales e controle de chat ao WhatsApp Web",
+  "icons": {
+    "48": "jetsales.png",
+    "128": "jetchat.png"
   },
   "content_scripts": [
     {
       "matches": ["https://web.whatsapp.com/*"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["jetsales.png", "chat.png", "jetchat.png"],
+      "matches": ["https://web.whatsapp.com/*"]
     }
   ]
 }
