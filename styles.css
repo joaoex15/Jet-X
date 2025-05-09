@@ -1,4 +1,3 @@
-/* Container Principal */
 .jet-floating-container {
   position: fixed;
   bottom: 20px;
@@ -6,25 +5,29 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  z-index: 10000;
+  z-index: 9999;
 }
 
-/* Estilo base para botões flutuantes */
 .jet-floating-btn {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
+  background: #2c3e50;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
 }
 
 .jet-floating-btn:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  background: #1a252f;
+}
+
+.jet-floating-btn.active-btn {
+  background: #3498db;
 }
 
 .jet-floating-btn img {
@@ -33,149 +36,70 @@
   object-fit: contain;
 }
 
-/* Botão do Chat */
-.jet-chat-btn {
-  background: #3498db;
-}
-
-.jet-chat-btn:hover {
-  background: #2980b9;
-}
-
-/* Botão de Scripts */
-.jet-scripts-btn {
-  background: #2ecc71;
-}
-
-.jet-scripts-btn:hover {
-  background: #27ae60;
-}
-
-/* Containers de Chat e Scripts */
-.jet-chat-container,
-.jet-scripts-container {
+.jet-chat-container, .jet-scripts-container {
   position: fixed;
+  bottom: 90px;
   right: 20px;
   width: 350px;
   background: white;
   border-radius: 10px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 9998;
   display: none;
   flex-direction: column;
-  z-index: 9999;
+  overflow: hidden;
 }
 
-.jet-chat-container {
-  bottom: 150px;
-  height: 500px;
-}
-
-.jet-scripts-container {
-  bottom: 230px;
-  max-height: 60vh;
-}
-
-/* Cabeçalhos */
-.jet-chat-header,
-.jet-scripts-header {
-  padding: 12px 15px;
+.jet-chat-header, .jet-scripts-header {
   background: #2c3e50;
   color: white;
+  padding: 12px 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.jet-chat-header span,
 .jet-scripts-header h3 {
-  font-size: 16px;
-  font-weight: 500;
   margin: 0;
+  font-size: 16px;
 }
 
-/* Botões de controle */
-.jet-close-btn,
-.jet-minimize-btn {
+.jet-close-btn, .jet-minimize-btn {
   background: none;
   border: none;
   color: white;
-  font-size: 20px;
+  font-size: 18px;
   cursor: pointer;
-  padding: 0 8px;
-  transition: opacity 0.2s;
+  padding: 0 5px;
 }
 
-.jet-close-btn:hover,
-.jet-minimize-btn:hover {
-  opacity: 0.8;
-}
-
-/* Abas - Versão Melhorada */
 .jet-scripts-tabs {
   display: flex;
-  border-bottom: 2px solid #3498db;
-  background: #f8f9fa;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-bottom: 1px solid #eee;
 }
 
 .jet-tab-btn {
   flex: 1;
-  padding: 15px 10px;
+  padding: 12px;
   border: none;
   background: none;
   cursor: pointer;
-  font-weight: 600;
   font-size: 14px;
-  color: #555;
-  text-align: center;
-  transition: all 0.3s ease;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
 .jet-tab-btn.active {
+  border-bottom: 2px solid #3498db;
   color: #3498db;
-  background: rgba(52, 152, 219, 0.1);
 }
 
-.jet-tab-btn:after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: transparent;
-  transition: all 0.3s ease;
-}
-
-.jet-tab-btn.active:after {
-  background: #3498db;
-}
-
-.jet-tab-btn:hover:not(.active) {
-  background: rgba(0, 0, 0, 0.05);
-}
-
-/* Ícones das abas */
-.jet-tab-icon {
-  margin-right: 8px;
-  font-size: 16px;
-  vertical-align: middle;
-}
-
-/* Melhorias na acessibilidade */
-.jet-tab-btn:focus {
-  outline: 2px solid #3498db;
-  outline-offset: -2px;
-}
-
-/* Painéis */
 .jet-tab-pane {
   display: none;
   padding: 15px;
-  flex-grow: 1;
+  max-height: 500px;
   overflow-y: auto;
 }
 
@@ -183,22 +107,23 @@
   display: block;
 }
 
-/* Filtros */
 .jet-scripts-filter {
   display: flex;
   gap: 10px;
   margin-bottom: 15px;
 }
 
-.jet-scripts-filter select,
-.jet-scripts-filter input {
-  flex: 1;
-  padding: 8px;
+.jet-category-filter, .jet-search-input {
+  padding: 8px 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  font-size: 14px;
 }
 
-/* Lista de scripts */
+.jet-search-input {
+  flex: 1;
+}
+
 .jet-scripts-list {
   display: flex;
   flex-direction: column;
@@ -206,10 +131,14 @@
 }
 
 .jet-script-item {
-  padding: 12px;
   border: 1px solid #eee;
-  border-radius: 5px;
-  background: #f9f9f9;
+  border-radius: 6px;
+  padding: 12px;
+  transition: all 0.2s;
+}
+
+.jet-script-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .jet-script-item-header {
@@ -220,144 +149,161 @@
 
 .jet-script-item-title {
   font-weight: bold;
-  color: #2c3e50;
+  font-size: 15px;
 }
 
 .jet-script-item-category {
   font-size: 12px;
   padding: 2px 8px;
   border-radius: 10px;
-  background: #e0e0e0;
+  background: #eee;
 }
 
+.jet-category-vendas { background: #e3f2fd; color: #1976d2; }
+.jet-category-suporte { background: #e8f5e9; color: #388e3c; }
+.jet-category-financeiro { background: #fff3e0; color: #f57c00; }
+.jet-category-outros { background: #f3e5f5; color: #8e24aa; }
+
 .jet-script-item-content {
-  margin: 8px 0;
+  font-size: 14px;
   color: #555;
+  margin-bottom: 10px;
 }
 
 .jet-script-item-actions {
   display: flex;
+  gap: 8px;
+}
+
+.jet-use-btn, .jet-delete-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.jet-use-btn {
+  background: #3498db;
+  color: white;
+}
+
+.jet-use-btn:hover {
+  background: #2980b9;
+}
+
+.jet-delete-btn {
+  background: #f5f5f5;
+  color: #555;
+}
+
+.jet-delete-btn:hover {
+  background: #e0e0e0;
+}
+
+.jet-script-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.jet-form-group {
+  display: flex;
+  flex-direction: column;
   gap: 5px;
 }
 
-.jet-script-item-actions button {
-  padding: 4px 8px;
-  font-size: 12px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-/* Formulário */
-.jet-form-group {
-  margin-bottom: 15px;
-}
-
 .jet-form-group label {
-  display: block;
-  margin-bottom: 5px;
+  font-size: 14px;
   font-weight: 500;
 }
 
-.jet-form-group input,
-.jet-form-group select,
-.jet-form-group textarea {
-  width: 100%;
-  padding: 8px;
+.jet-script-title, .jet-script-category, .jet-script-content {
+  padding: 8px 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  font-size: 14px;
+  color: #000;
 }
 
-.jet-form-group textarea {
-  min-height: 120px;
+.jet-script-content {
+  min-height: 150px;
   resize: vertical;
 }
 
-.jet-form-actions {
-  text-align: right;
-}
-
-/* Cores das categorias */
-.jet-category-vendas {
-  background: #d4edda !important;
-  color: #155724 !important;
-}
-
-.jet-category-suporte {
-  background: #e2e3e5 !important;
-  color: #383d41 !important;
-}
-
-.jet-category-financeiro {
-  background: #fff3cd !important;
-  color: #856404 !important;
-}
-
-.jet-category-outros {
-  background: #f8d7da !important;
-  color: #721c24 !important;
-}
-
-/* Corpo dos containers */
-.jet-chat-iframe {
-  flex-grow: 1;
+.jet-save-script {
+  padding: 10px;
+  background: #2c3e50;
+  color: white;
   border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
 }
 
-/* Efeitos para botões ativos */
-.jet-floating-btn.active-btn {
-  transform: scale(1.1);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.8);
+.jet-save-script:hover {
+  background: #1a252f;
 }
 
-.jet-chat-btn.active-chat-btn {
-  animation: pulse 1.5s infinite;
+.jet-no-scripts {
+  text-align: center;
+  color: #777;
+  padding: 20px;
 }
 
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+.jet-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  border-radius: 4px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10000;
+  animation: slideIn 0.3s ease-out;
+}
+
+.jet-toast.success {
+  background-color: #4caf50;
+}
+
+.jet-toast.error {
+  background-color: #f44336;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
   }
-  70% {
-    box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 
-/* Responsividade */
-@media (max-width: 480px) {
-  .jet-floating-container {
-    bottom: 15px;
-    right: 15px;
-  }
-  
-  .jet-chat-container,
-  .jet-scripts-container {
-    width: calc(100% - 30px);
-    right: 15px;
-  }
-  
-  .jet-chat-container {
-    bottom: 140px;
-    height: 60vh;
-  }
-  
-  .jet-scripts-container {
-    bottom: 210px;
-    max-height: 50vh;
-  }
+.jet-edit-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #ffc107;
+  color: #000;
+}
 
-  /* Abas em mobile */
-  .jet-tab-btn {
-    padding: 18px 5px;
-    font-size: 15px;
-    min-width: 50%;
-  }
-  
-  .jet-tab-icon {
-    margin-right: 5px;
-    font-size: 18px;
-  }
+.jet-edit-btn:hover {
+  background: #e0a800;
+}
+
+.jet-script-item-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.jet-script-item-actions button {
+  flex: 1;
 }

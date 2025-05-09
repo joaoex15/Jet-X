@@ -10,20 +10,10 @@
   "content_scripts": [
     {
       "matches": ["https://web.whatsapp.com/*"],
-      "js": [
-        "content/scriptManager.js",
-        "content/uiManager.js",
-        "content/chatManager.js",
-        "content/content.js"
+      "js": ["main.js"
       ],
 
-"css": [
-        "styles/base.css",
-        "styles/components.css",
-        "styles/floating-elements.css",
-        "styles/containers.css",
-        "styles/scripts-ui.css",
-        "styles/responsive.css"
+"css": ["styles.css"
       ]
     }
   ],
@@ -32,5 +22,10 @@
       "resources": ["assets/jetsales.png", "chat.png", "assets/jetchat.png","config.json","assets/setting.png"],
       "matches": ["https://web.whatsapp.com/*"]
     }
+    
+  ],
+  "permissions": [
+    "http://localhost:4000/",
+    "http://localhost:4000/*"
   ]
 }
