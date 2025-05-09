@@ -4,19 +4,32 @@
   "version": "1.0",
   "description": "Adiciona logo JetSales e controle de chat ao WhatsApp Web",
   "icons": {
-    "48": "jetsales.png",
-    "128": "jetchat.png"
+    "48": "assets/jetsales.png",
+    "128": "assets/jetchat.png"
   },
   "content_scripts": [
     {
       "matches": ["https://web.whatsapp.com/*"],
-      "js": ["content.js"],
-      "css": ["styles.css"]
+      "js": [
+        "content/scriptManager.js",
+        "content/uiManager.js",
+        "content/chatManager.js",
+        "content/content.js"
+      ],
+
+"css": [
+        "styles/base.css",
+        "styles/components.css",
+        "styles/floating-elements.css",
+        "styles/containers.css",
+        "styles/scripts-ui.css",
+        "styles/responsive.css"
+      ]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["jetsales.png", "chat.png", "jetchat.png","config.json","setting.png"],
+      "resources": ["assets/jetsales.png", "chat.png", "assets/jetchat.png","config.json","assets/setting.png"],
       "matches": ["https://web.whatsapp.com/*"]
     }
   ]

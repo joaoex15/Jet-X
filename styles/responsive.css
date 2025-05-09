@@ -1,0 +1,48 @@
+/* ================ RESPONSIVE ADJUSTMENTS ================ */
+@media (max-width: 480px) {
+    .jet-floating-container {
+      bottom: 15px;
+      right: 15px;
+    }
+    
+    .jet-container {
+      width: calc(100% - 30px);
+      right: 15px;
+      max-width: 100%;
+    }
+    
+    .jet-chat-container {
+      bottom: 140px;
+      height: 60vh;
+    }
+    
+    .jet-scripts-container {
+      bottom: 210px;
+      max-height: 50vh;
+    }
+  
+    /* Tabs in mobile */
+    .jet-tab-btn {
+      padding: 12px 5px;
+      font-size: 13px;
+      min-width: 50%;
+    }
+    
+    .jet-tab-icon {
+      margin-right: 5px;
+      font-size: 16px;
+    }
+  
+    /* Form adjustments */
+    .jet-form-group {
+      margin-bottom: 12px;
+    }
+  
+    .jet-script-item-actions {
+      flex-wrap: wrap;
+    }
+  
+    .jet-script-item-actions button {
+      flex-grow: 1;
+    }
+  }

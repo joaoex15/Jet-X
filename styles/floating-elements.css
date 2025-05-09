@@ -1,0 +1,76 @@
+/* ================ FLOATING CONTAINER ================ */
+.jet-floating-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    z-index: 10000;
+  }
+  
+  /* ================ FLOATING BUTTONS ================ */
+  .jet-floating-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+    border: none;
+    outline: none;
+  }
+  
+  .jet-floating-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .jet-floating-btn img {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+    pointer-events: none;
+  }
+  
+  .jet-floating-btn.active-btn {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.8);
+  }
+  
+  /* Specific buttons */
+  .jet-chat-btn {
+    background: var(--primary-color);
+  }
+  
+  .jet-chat-btn:hover {
+    background: #2980b9;
+  }
+  
+  .jet-scripts-btn {
+    background: var(--secondary-color);
+  }
+  
+  .jet-scripts-btn:hover {
+    background: #27ae60;
+  }
+  
+  /* Animation for active chat button */
+  .jet-chat-btn.active-chat-btn {
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+    }
+  }

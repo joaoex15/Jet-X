@@ -1,0 +1,138 @@
+/* ================ BUTTONS ================ */
+.jet-btn {
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .jet-btn-primary {
+    background: var(--primary-color);
+    color: white;
+  }
+  
+  .jet-btn-primary:hover {
+    background: #2980b9;
+    transform: translateY(-1px);
+  }
+  
+  .jet-btn-danger {
+    background: var(--danger-color);
+    color: white;
+  }
+  
+  .jet-btn-danger:hover {
+    background: #c0392b;
+  }
+  
+  .jet-btn-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .jet-btn-icon {
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+  }
+  
+  /* ================ FORMS ================ */
+  .jet-form-group {
+    margin-bottom: var(--space-md);
+  }
+  
+  .jet-form-label {
+    display: block;
+    margin-bottom: var(--space-sm);
+    font-weight: 500;
+    color: var(--dark-color);
+  }
+  
+  .jet-form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    transition: all var(--transition-fast);
+  }
+  
+  .jet-form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+  
+  .jet-form-textarea {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+  
+  /* ================ CARDS ================ */
+  .jet-card {
+    padding: var(--space-md);
+    border: 1px solid #eee;
+    border-radius: var(--radius-md);
+    background: white;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  
+  .jet-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  
+  /* ================ ALERTS ================ */
+  .jet-alert {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    color: white;
+    font-size: 14px;
+    z-index: 11000;
+    animation: slideIn 0.3s ease-out;
+    max-width: 80%;
+    text-align: center;
+  }
+  
+  .jet-alert-success {
+    background: var(--success-color);
+  }
+  
+  .jet-alert-error {
+    background: var(--danger-color);
+  }
+  
+  .jet-alert-info {
+    background: var(--info-color);
+  }
+  
+  .jet-alert-fade-out {
+    animation: fadeOut 0.5s ease-in forwards;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+  
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px);
+    }
+  }

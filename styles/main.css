@@ -1,0 +1,20 @@
+/* ================ MAIN CSS FILE ================ */
+/* Importa todos os outros arquivos CSS */
+
+/* 1. Base styles e variáveis */
+@import url('base.css');
+
+/* 2. Componentes reutilizáveis */
+@import url('components.css');
+
+/* 3. Elementos flutuantes */
+@import url('floating-elements.css');
+
+/* 4. Containers (chat e scripts) */
+@import url('containers.css');
+
+/* 5. UI específica do gerenciador de scripts */
+@import url('scripts-ui.css');
+
+/* 6. Ajustes responsivos */
+@import url('responsive.css');
