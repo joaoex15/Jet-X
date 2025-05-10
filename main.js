@@ -37,7 +37,7 @@ chatContainer.innerHTML = `
 `;
 document.body.appendChild(chatContainer);
 
-// Container de Scripts
+// Container de Scripts (simplificado)
 const scriptsContainer = document.createElement('div');
 scriptsContainer.className = 'jet-scripts-container';
 scriptsContainer.style.display = 'none';
@@ -53,6 +53,9 @@ scriptsContainer.innerHTML = `
     <button class="jet-tab-btn" data-tab="create">
       <i class="jet-tab-icon">✚</i> Novo Script
     </button>
+    <button class="jet-tab-btn" data-tab="generate">
+      <i class="jet-tab-icon">✨</i> Gerar com IA
+    </button>
   </div>
   <div class="jet-scripts-content">
     <div class="jet-tab-pane active" id="list">
@@ -60,9 +63,9 @@ scriptsContainer.innerHTML = `
         <select class="jet-category-filter">
           <option value="">Todas categorias</option>
           <option value="vendas">Vendas</option>
+          <option value="pos venda">Pós Venda</option>
           <option value="suporte">Suporte</option>
           <option value="financeiro">Financeiro</option>
-          <option value="outros">Outros</option>
         </select>
         <input type="text" class="jet-search-input" placeholder="Buscar scripts...">
       </div>
@@ -79,9 +82,9 @@ scriptsContainer.innerHTML = `
           <label>Categoria</label>
           <select class="jet-script-category">
             <option value="vendas">Vendas</option>
+            <option value="pos venda">Pós Venda</option>
             <option value="suporte">Suporte</option>
             <option value="financeiro">Financeiro</option>
-            <option value="outros">Outros</option>
           </select>
         </div>
         <div class="jet-form-group">
@@ -94,6 +97,52 @@ scriptsContainer.innerHTML = `
         </div>
       </div>
     </div>
+
+    <div class="jet-tab-pane" id="generate">
+      <div class="jet-generate-form">
+        <div class="jet-form-group">
+          <label>Título do Script</label>
+          <input type="text" class="jet-generate-title" placeholder="Ex: Follow-up pós-venda">
+        </div>
+        <div class="jet-form-group">
+          <label>Descrição do Script</label>
+          <textarea class="jet-generate-prompt" placeholder="Descreva o que você precisa no script..."></textarea>
+        </div>
+        <div class="jet-form-group">
+          <label>Categoria</label>
+          <select class="jet-generate-category">
+            <option value="vendas">Vendas</option>
+            <option value="pos venda">Pós Venda</option>
+            <option value="suporte">Suporte</option>
+            <option value="financeiro">Financeiro</option>
+          </select>
+        </div>
+        <div class="jet-form-group">
+          <label>Tom da Mensagem</label>
+          <select class="jet-generate-tone">
+            <option value="profissional">Profissional</option>
+            <option value="amigavel">Amigável</option>
+            <option value="empolgado">Empolgado</option>
+            <option value="urgente">Urgente</option>
+          </select>
+        </div>
+        <div class="jet-generate-actions">
+          <button class="jet-generate-btn">Gerar Script</button>
+          <div class="jet-generate-status"></div>
+        </div>
+      </div>
+      <div class="jet-generate-result" style="display:none;">
+        <div class="jet-result-header">
+          <h4>Resultado Gerado</h4>
+          <button class="jet-use-generated">Usar Script</button>
+        </div>
+        <div class="jet-result-content"></div>
+        <div class="jet-result-actions">
+          <button class="jet-regenerate-btn">Gerar Novamente</button>
+          <button class="jet-save-generated">Salvar Script</button>
+        </div>
+      </div>
+    </div>
   </div>
 `;
 document.body.appendChild(scriptsContainer);
@@ -102,12 +151,14 @@ class ScriptManager {
   constructor() {
     this.scripts = [];
     this.currentTab = 'list';
-    this.apiBaseUrl = 'http://localhost:4000/scripts';
+    this.apiBaseUrl = 'http://localhost:4000';
     this.authToken = localStorage.getItem('apiToken');
     this.isEditing = false;
     this.currentEditId = null;
     this.isSending = false;
     this.saving = false;
+    this.currentGeneratedScript = null;
+    
     this.initEvents();
     this.loadScripts();
   }
@@ -142,7 +193,7 @@ class ScriptManager {
 
   async loadScripts() {
     try {
-      const response = await fetch(this.apiBaseUrl, { 
+      const response = await fetch(`${this.apiBaseUrl}/scripts`, { 
         headers: this.getHeaders() 
       });
       
@@ -190,13 +241,13 @@ class ScriptManager {
     try {
       let response;
       if (this.isEditing && this.currentEditId) {
-        response = await fetch(`${this.apiBaseUrl}/${this.currentEditId}`, {
+        response = await fetch(`${this.apiBaseUrl}/scripts/${this.currentEditId}`, {
           method: 'PATCH',
           headers: this.getHeaders(),
           body: JSON.stringify(scriptData)
         });
       } else {
-        response = await fetch(this.apiBaseUrl, {
+        response = await fetch(`${this.apiBaseUrl}/scripts`, {
           method: 'POST',
           headers: this.getHeaders(),
           body: JSON.stringify(scriptData)
@@ -229,7 +280,7 @@ class ScriptManager {
 
   async editScript(id, updatedData) {
     try {
-      const response = await fetch(`${this.apiBaseUrl}/${id}`, {
+      const response = await fetch(`${this.apiBaseUrl}/scripts/${id}`, {
         method: 'PATCH',
         headers: this.getHeaders(),
         body: JSON.stringify(updatedData)
@@ -260,7 +311,7 @@ class ScriptManager {
     if (!confirm('Tem certeza que deseja excluir este script?')) return;
 
     try {
-      const response = await fetch(`${this.apiBaseUrl}/${id}`, {
+      const response = await fetch(`${this.apiBaseUrl}/scripts/${id}`, {
         method: 'DELETE',
         headers: this.getHeaders()
       });
@@ -340,13 +391,11 @@ class ScriptManager {
         });
         campoMensagem.dispatchEvent(enterEvent);
         
-        // Libera imediatamente após confirmar o envio
         console.log('✅ Mensagem enviada com sucesso!');
         this.showSuccessToast('Mensagem enviada!');
         this.isSending = false;
         console.log('🔓 Liberando para novos envios...');
 
-        // Fallback opcional (não bloqueia novos envios)
         setTimeout(() => {
           if (botaoEnviar && !this.isSending) {
             botaoEnviar.click();
@@ -467,6 +516,7 @@ class ScriptManager {
   getCategoryLabel(category) {
     const labels = {
       'vendas': 'Vendas',
+      'pos venda': 'Pós Venda',
       'suporte': 'Suporte',
       'financeiro': 'Financeiro',
       'outros': 'Outros'
@@ -542,6 +592,108 @@ class ScriptManager {
     document.querySelector('.jet-cancel-edit').addEventListener('click', () => {
       this.cancelEdit();
     });
+
+    document.querySelector('.jet-generate-btn').addEventListener('click', () => {
+      this.generateScript();
+    });
+
+    document.querySelector('.jet-use-generated').addEventListener('click', () => {
+      if (this.currentGeneratedScript) {
+        this.useScript(this.currentGeneratedScript.content);
+      }
+    });
+
+    document.querySelector('.jet-save-generated').addEventListener('click', () => {
+      if (this.currentGeneratedScript) {
+        this.saveGeneratedScript();
+      }
+    });
+
+    document.querySelector('.jet-regenerate-btn').addEventListener('click', () => {
+      this.generateScript();
+    });
+  }
+
+  async generateScript() {
+    const title = document.querySelector('.jet-generate-title').value.trim();
+    const prompt = document.querySelector('.jet-generate-prompt').value.trim();
+    const category = document.querySelector('.jet-generate-category').value;
+    const tone = document.querySelector('.jet-generate-tone').value;
+
+    if (!title || !prompt) {
+      this.showErrorToast('Por favor, preencha o título e a descrição');
+      return;
+    }
+
+    const generateStatus = document.querySelector('.jet-generate-status');
+    generateStatus.textContent = 'Gerando script...';
+    generateStatus.style.color = '';
+
+    try {
+      const payload = {
+        title,
+        prompt,
+        category: category.toLowerCase(),
+        tone: tone.toLowerCase()
+      };
+
+      const response = await fetch(`${this.apiBaseUrl}/chatbase`, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `Erro na API: ${response.status}`);
+      }
+
+      const result = await response.json();
+      
+      if (result.success && result.data) {
+        this.currentGeneratedScript = result.data;
+        this.showGeneratedResult(result.data);
+        generateStatus.textContent = 'Script gerado com sucesso!';
+        generateStatus.style.color = 'green';
+      } else {
+        throw new Error(result.error || 'Erro desconhecido ao gerar script');
+      }
+    } catch (error) {
+      console.error('Erro ao gerar script:', error);
+      generateStatus.textContent = `Erro: ${error.message}`;
+      generateStatus.style.color = 'red';
+      this.showErrorToast('Falha ao gerar script');
+    }
+  }
+
+  showGeneratedResult(script) {
+    const resultContainer = document.querySelector('.jet-generate-result');
+    const resultContent = document.querySelector('.jet-result-content');
+    
+    resultContent.innerHTML = `
+      <h5>${script.title}</h5>
+      <div class="jet-generated-meta">
+        <span class="jet-generated-category">${this.getCategoryLabel(script.category)}</span>
+        <span class="jet-generated-tone">Tom: ${script.tone}</span>
+      </div>
+      <pre class="jet-generated-text">${script.content}</pre>
+    `;
+    
+    resultContainer.style.display = 'block';
+    resultContainer.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  saveGeneratedScript() {
+    if (!this.currentGeneratedScript) return;
+    
+    document.querySelector('.jet-script-title').value = this.currentGeneratedScript.title;
+    document.querySelector('.jet-script-content').value = this.currentGeneratedScript.content;
+    document.querySelector('.jet-script-category').value = this.currentGeneratedScript.category;
+    
+    document.querySelector('.jet-tab-btn[data-tab="create"]').click();
+    document.querySelector('.jet-script-title').focus();
+    
+    this.showSuccessToast('Script carregado para edição. Revise e salve!');
   }
 }
 
