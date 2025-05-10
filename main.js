@@ -151,7 +151,7 @@ class ScriptManager {
   constructor() {
     this.scripts = [];
     this.currentTab = 'list';
-    this.apiBaseUrl = 'http://localhost:4000';
+    this.apiBaseUrl = 'https://api-jet-x-production.up.railway.app';
     this.authToken = localStorage.getItem('apiToken');
     this.isEditing = false;
     this.currentEditId = null;

@@ -10,22 +10,29 @@
   "content_scripts": [
     {
       "matches": ["https://web.whatsapp.com/*"],
-      "js": ["main.js"
-      ],
-
-"css": ["styles.css"
-      ]
+      "js": ["main.js"],
+      "css": ["styles.css"]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["assets/jetsales.png", "chat.png", "assets/jetchat.png","config.json","assets/setting.png"],
+      "resources": [
+        "assets/jetsales.png",
+        "chat.png",
+        "assets/jetchat.png",
+        "config.json",
+        "assets/setting.png"
+      ],
       "matches": ["https://web.whatsapp.com/*"]
     }
-    
   ],
   "permissions": [
-    "http://localhost:4000/",
-    "http://localhost:4000/*"
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://web.whatsapp.com/",
+    "https://api-jet-x-production.up.railway.app/",
+    "https://api-jet-x-production.up.railway.app/*"
   ]
 }
